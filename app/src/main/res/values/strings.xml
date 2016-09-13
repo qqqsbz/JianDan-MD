@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">煎蛋</string>
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
+    <string name="navigation_username">Android N</string>
+
+    <!--导航栏菜单-->
+    <string name="navigation_menu_fresh">新鲜图</string>
+    <string name="navigation_menu_boring">无聊图</string>
+    <string name="navigation_menu_girl">妹纸图</string>
+    <string name="navigation_menu_stain">段子</string>
+    <string name="navigation_menu_movie">小电影</string>
+    <string name="navigation_menu_setting">设置</string>
+
+    <!--基本设置-->
+    <string name="setting_basic_title">基本设置</string>
+    <string name="setting_basic_cache_title">清楚缓存</string>
+    <string name="setting_basic_cache_summry">缓存大小:</string>
+    <string name="setting_basic_refresh_title">新鲜事大图模式</string>
+
+    <!--其他设置-->
+    <string name="setting_other_title">其他设置</string>
+    <string name="setting_other_about">关于开发者</string>
+    <string name="setting_other_version">1.2</string>
+
+
+</resources>

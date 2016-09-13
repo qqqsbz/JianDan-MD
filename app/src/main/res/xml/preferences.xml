@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--基本设置-->
+    <PreferenceCategory android:title="@string/setting_basic_title">
+
+        <Preference
+            android:key="setting_cache"
+            android:title="@string/setting_basic_cache_title"
+            android:summary="@string/setting_basic_cache_summry"
+            />
+
+        <CheckBoxPreference
+            android:key="setting_refresh"
+            android:title="@string/setting_basic_refresh_title"
+            android:checked="true"
+            android:defaultValue="true"
+            />
+
+    </PreferenceCategory>
+
+    <!--其他设置-->
+    <PreferenceCategory android:title="@string/setting_other_title">
+
+        <Preference
+            android:key="setting_about"
+            android:title="@string/setting_other_about"
+            />
+
+        <Preference
+            android:key="setting_version"
+            android:title="@string/setting_other_version"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
