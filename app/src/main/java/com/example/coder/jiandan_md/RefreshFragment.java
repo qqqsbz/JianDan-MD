@@ -1,22 +1,27 @@
 package com.example.coder.jiandan_md;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
+import com.example.coder.jiandan_md.listener.RecyclerItemClickListener;
+import com.example.coder.jiandan_md.refresh.RefreshDetailActivity;
 import com.example.coder.jiandan_md.refresh.RefreshItemAdapter;
 import com.example.coder.jiandan_md.util.CallBackService;
 import com.example.coder.jiandan_md.util.ConstantString;
@@ -55,6 +60,8 @@ public class RefreshFragment extends Fragment implements CallBackService,Constan
 
         ButterKnife.bind(this,view);
 
+        setHasOptionsMenu(true);
+
         return view;
     }
 
@@ -72,6 +79,19 @@ public class RefreshFragment extends Fragment implements CallBackService,Constan
         refreshItemAdapter = new RefreshItemAdapter(getActivity(),this,false);
 
         recyclerView.setAdapter(refreshItemAdapter);
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Intent intent = new Intent(getActivity(),RefreshDetailActivity.class);
+
+                intent.putExtra(REFRESH_ITEM_KEY,refreshItemAdapter.getRefreshPost(position));
+
+                startActivity(intent);
+
+            }
+        }));
 
         materialRefreshLayout.setIsOverLay(true);
 
@@ -106,12 +126,18 @@ public class RefreshFragment extends Fragment implements CallBackService,Constan
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.refresh) {
+        if (item.getItemId() == R.id.menu_refresh) {
+
+            refreshItemAdapter.clear();
+
+            loading.start();
+
+            refreshItemAdapter.onRefresh();
 
             return true;
         }
 
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

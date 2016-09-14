@@ -22,6 +22,7 @@
     <string name="setting_other_title">其他设置</string>
     <string name="setting_other_about">关于开发者</string>
     <string name="setting_other_version">1.2</string>
+    <string name="title_activity_refresh_detail">RefreshDetailActivity</string>
 
 
 </resources>

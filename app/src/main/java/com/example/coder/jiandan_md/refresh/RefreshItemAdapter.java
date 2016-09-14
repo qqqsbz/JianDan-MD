@@ -15,8 +15,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.coder.jiandan_md.R;
-import com.example.coder.jiandan_md.util.ApiService;
+import com.example.coder.jiandan_md.model.Refresh;
+import com.example.coder.jiandan_md.model.RefreshPost;
+import com.example.coder.jiandan_md.net.ApiService;
 import com.example.coder.jiandan_md.util.CallBackService;
+import com.example.coder.jiandan_md.util.ConstantString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +68,12 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
     private int lastPosition = -1;
 
 
+    /**
+     * 构造函数
+     * @param context   上下文
+     * @param callBackService   网络请求成功或者失败调用的回调
+     * @param isLargeModel  是否为大图模式
+     */
     public RefreshItemAdapter(Context context,CallBackService callBackService,boolean isLargeModel) {
 
         this.context = context;
@@ -74,6 +83,12 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
         this.isLargeModel = isLargeModel;
     }
 
+    /**
+     * 创建ViewHoloder
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -84,6 +99,11 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
         return new ViewHolder(view);
     }
 
+    /**
+     * 对ViewHolder进行数据绑定
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
@@ -102,17 +122,9 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
                 .centerCrop()
                 .into(holder.coverImageView);
 
-        if (isLargeModel) {
-
-            setAnimation(holder.cardView,position);
-
-        } else {
-
-            setAnimation(holder.contentView,position);
-        }
+        setAnimation(isLargeModel ? holder.cardView : holder.contentView,position);
 
     }
-
 
 
     @Override
@@ -126,7 +138,13 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
         return position;
     }
 
-    private void setAnimation(View viewHolder,int position) {
+
+    /**
+     * 设置动画
+     * @param viewHolder 要进行动画的View
+     * @param position   下标值
+     */
+    private void setAnimation(View viewHolder, int position) {
 
         if (lastPosition < position) {
 
@@ -137,8 +155,12 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
             lastPosition = position;
 
         }
+
     }
 
+    /**
+     * 加载第一页
+     */
     public void onRefresh() {
 
         page = 1;
@@ -147,6 +169,9 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
 
     }
 
+    /**
+     * 加载更多
+     */
     public void onRefreshMore() {
 
         page ++;
@@ -156,10 +181,13 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
     }
 
 
+    /**
+     * 加载数据
+     */
     private void reloadData() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://jandan.net")
+                            .baseUrl(ConstantString.REFRESH_BASEURL)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
 
@@ -193,6 +221,25 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
 
     }
 
+    /**
+     * 根据下标值获取 新鲜事对象
+     * @param position 下标值
+     * @return  新鲜事对象
+     */
+    public RefreshPost getRefreshPost(int position) {
+
+        return refreshPosts.get(position);
+    }
+
+    /**
+     * 清楚数据并刷新
+     */
+    public void clear() {
+
+        refreshPosts.clear();
+
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
