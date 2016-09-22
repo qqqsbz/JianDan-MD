@@ -1,5 +1,7 @@
 package com.example.coder.jiandan_md.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -11,7 +13,8 @@ public class Refresh {
 
     private int count;
 
-    private int count_total;
+    @SerializedName("count_total")
+    private int countTotal;
 
     private int pages;
 
@@ -26,11 +29,11 @@ public class Refresh {
     }
 
     public int getCountTotal() {
-        return count_total;
+        return countTotal;
     }
 
-    public void setCountTotal(int count_total) {
-        this.count_total = count_total;
+    public void setCountTotal(int countTotal) {
+        this.countTotal = countTotal;
     }
 
     public int getPages() {

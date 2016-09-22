@@ -3,19 +3,18 @@ package com.example.coder.jiandan_md.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
@@ -77,7 +76,9 @@ public class RefreshFragment extends Fragment implements CallBackService,Constan
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        refreshItemAdapter = new RefreshItemAdapter(getActivity(),this,true);
+        boolean isLarge = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(SettingFragment.SettingRefreshLager,true);
+
+        refreshItemAdapter = new RefreshItemAdapter(getActivity(),this,isLarge);
 
         recyclerView.setAdapter(refreshItemAdapter);
 
@@ -160,6 +161,6 @@ public class RefreshFragment extends Fragment implements CallBackService,Constan
 
         materialRefreshLayout.finishRefreshLoadMore();
 
-        Toast.makeText(getActivity(),LoadingError,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),LOADINGERROR,Toast.LENGTH_SHORT).show();
     }
 }

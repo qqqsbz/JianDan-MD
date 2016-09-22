@@ -13,13 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.coder.jiandan_md.R;
 import com.example.coder.jiandan_md.model.Refresh;
 import com.example.coder.jiandan_md.model.RefreshPost;
 import com.example.coder.jiandan_md.net.ApiService;
 import com.example.coder.jiandan_md.util.CallBackService;
 import com.example.coder.jiandan_md.util.ConstantString;
+import com.example.coder.jiandan_md.util.ImageLoadProxy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,10 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
      */
     private int lastPosition = -1;
 
+    /**
+     * 图片加载选项
+     */
+    private DisplayImageOptions options;
 
     /**
      * 构造函数
@@ -81,6 +86,8 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
         this.callBackService = callBackService;
 
         this.isLargeModel = isLargeModel;
+
+        options = ImageLoadProxy.getOptions4PictureList(isLargeModel ? R.drawable.ic_loading_large : R.drawable.ic_loading_small);
     }
 
     /**
@@ -115,12 +122,7 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
 
         holder.browseTextView.setText("浏览:"+refreshPost.getTags().get(0).getPostCount() + "次");
 
-        Glide.with(context)
-                .load(refreshPost.getCustomFields().getThumbC().get(0))
-                .placeholder(isLargeModel ? R.drawable.ic_loading_large : R.drawable.ic_loading_small)
-                .crossFade()
-                .centerCrop()
-                .into(holder.coverImageView);
+        ImageLoadProxy.displayImage(refreshPost.getCustomFields().getThumbC().get(0),holder.coverImageView,options);
 
         setAnimation(isLargeModel ? holder.cardView : holder.contentView,position);
 
@@ -138,6 +140,22 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
         return position;
     }
 
+    /**
+     * 当ViewHolder从窗口消失 清除动画 避免快速滑动时ViewHolde重叠
+     * @param holder
+     */
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+
+        if (isLargeModel) {
+
+            holder.cardView.clearAnimation();
+
+        } else {
+
+            holder.contentView.clearAnimation();
+        }
+    }
 
     /**
      * 设置动画
@@ -193,7 +211,7 @@ public class RefreshItemAdapter extends RecyclerView.Adapter<RefreshItemAdapter.
 
         ApiService apiService = retrofit.create(ApiService.class);
 
-        Call<Refresh> call = apiService.getRefreshsWithPage(page);
+        Call<Refresh> call = apiService.getRefreshWithPage(page);
 
         call.enqueue(new Callback<Refresh>() {
             @Override

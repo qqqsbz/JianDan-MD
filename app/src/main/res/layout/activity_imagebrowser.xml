@@ -1,5 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark">
+
+    <WebView
+        android:id="@+id/imageBrowser_webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"/>
+
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/imageBrowser_photoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"/>
+
+
+    <RelativeLayout
+        android:id="@+id/imageBrowser_navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/black"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/imageBrowser_backImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_action_back"
+            />
+
+        <ImageView
+            android:id="@+id/imageBrowser_shareImageView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ic_action_share"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/imageBrowser_progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_below="@+id/imageBrowser_navigationBar"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_indeterminate_horizontal_holo"
+        android:mirrorForRtl="true"
+        android:progressDrawable="@drawable/progress_horizontal_holo_dark"/>
+
+    <LinearLayout
+        android:id="@+id/imageBrowser_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/black"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/imageBrowser_like"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:text="OO"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/imageBrowser_unlike"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:text="XX"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/imageBrowser_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_action_chat"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:padding="12dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/imageBrowser_download"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_action_download"
+            android:padding="8dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

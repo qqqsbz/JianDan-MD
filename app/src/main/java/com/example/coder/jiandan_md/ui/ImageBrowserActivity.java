@@ -16,7 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.coder.jiandan_md.R;
-import com.example.coder.jiandan_md.model.Boring;
+import com.example.coder.jiandan_md.model.Comment;
+import com.example.coder.jiandan_md.model.Picture;
 import com.example.coder.jiandan_md.util.ConstantString;
 import com.example.coder.jiandan_md.util.DiskCacheUtils;
 import com.example.coder.jiandan_md.util.DownLoadFinishCallBack;
@@ -82,7 +83,10 @@ public class ImageBrowserActivity extends AppCompatActivity implements ConstantS
      */
     private MediaScannerConnection connection = null;
 
-    private Boring.Comment comment = null;
+    /**
+     * 数据
+     */
+    private Comment comment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +109,7 @@ public class ImageBrowserActivity extends AppCompatActivity implements ConstantS
 
     private void initData() {
 
-        comment = (Boring.Comment) getIntent().getSerializableExtra(IMAGEBROWER_DATA);
+        comment = (Comment) getIntent().getSerializableExtra(IMAGEBROWER_DATA);
 
         isGif = getIntent().getBooleanExtra(IMAGEBROWER_ISGIF,true);
 
@@ -148,7 +152,7 @@ public class ImageBrowserActivity extends AppCompatActivity implements ConstantS
 
                     progressBar.setVisibility(View.GONE);
 
-                    Toast.makeText(.this,LoadingError,Toast.LENGTH_LONG).show();
+                    Toast.makeText(ImageBrowserActivity.this,LOADINGERROR,Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -180,7 +184,7 @@ public class ImageBrowserActivity extends AppCompatActivity implements ConstantS
 
                     progressBar.setVisibility(View.GONE);
 
-                    Toast.makeText(.this,LoadingError,Toast.LENGTH_LONG).show();
+                    Toast.makeText(ImageBrowserActivity.this,LOADINGERROR,Toast.LENGTH_LONG).show();
                 }
 
                 @Override

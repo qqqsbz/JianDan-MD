@@ -2,31 +2,25 @@ package com.example.coder.jiandan_md.refresh;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.coder.jiandan_md.R;
 import com.example.coder.jiandan_md.model.HTMLElement;
 import com.example.coder.jiandan_md.model.RefreshDetail;
 import com.example.coder.jiandan_md.model.RefreshPost;
 import com.example.coder.jiandan_md.net.ApiService;
 import com.example.coder.jiandan_md.util.ConstantString;
+import com.example.coder.jiandan_md.util.HTMLParser;
+import com.example.coder.jiandan_md.util.ImageLoadProxy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.victor.loading.rotate.RotateLoading;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.nodes.TextNode;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -92,12 +86,7 @@ public class RefreshDetailActivity extends AppCompatActivity implements Constant
 
         collapsingToolbarLayout.setTitle(refreshPost.getTitle());
 
-       Glide.with(this)
-            .load(refreshPost.getCustomFields().getThumbC().get(0))
-            .placeholder(R.drawable.ic_loading_large)
-            .centerCrop()
-            .crossFade()
-            .into(coverImageView);
+        ImageLoadProxy.displayImageWithLoadingPicture(refreshPost.getCustomFields().getThumbC().get(0),coverImageView,R.drawable.ic_loading_large);
 
         loadDetail();
     }
@@ -121,7 +110,9 @@ public class RefreshDetailActivity extends AppCompatActivity implements Constant
 
                 loading.stop();
 
-                parserHTML(response.body().getPost().getContent());
+                List<HTMLElement> elements = HTMLParser.parseContent(response.body().getPost().getContent());
+
+                RefreshDetailContent.addInView(contentLayout,elements);
             }
 
             @Override
@@ -129,77 +120,11 @@ public class RefreshDetailActivity extends AppCompatActivity implements Constant
 
                 loading.stop();
 
-                Toast.makeText(RefreshDetailActivity.this,LoadingError,Toast.LENGTH_LONG).show();
+                Toast.makeText(RefreshDetailActivity.this,LOADINGERROR,Toast.LENGTH_LONG).show();
             }
         });
 
     }
-
-    private void parserHTML(String content) {
-
-        Document document = Jsoup.parse(content);
-
-        Elements elements = document.getElementsByTag("body");
-
-        List<HTMLElement> htmlElements = new ArrayList<HTMLElement>();
-
-        for (Node node : elements.first().childNodes()) {
-
-            if (node instanceof Element) {
-
-                HTMLElement htmlElement = new HTMLElement();
-
-                for (Node node1 : node.childNodes()) {
-
-                    if (node1 instanceof Element) {
-
-                        Element nodeElement = (Element) node1;
-
-                        if (nodeElement.tagName().equals("img")) {
-
-                            HTMLElement imageElement = new HTMLElement();
-
-                            imageElement.setType(HTMLElement.ElementType.image);
-
-                            imageElement.setLink(nodeElement.attr("src"));
-
-                            htmlElements.add(imageElement);
-
-                        } else if (nodeElement.tagName().equals("em")){
-
-                            htmlElement.getTextBuffer().append("<em>"+((Element) node).text()+"</em>");
-
-                            htmlElement.setType(HTMLElement.ElementType.text);
-
-                        } else if (nodeElement.tagName().equals("strong")) {
-
-                            htmlElement.getTextBuffer().append(((TextNode) nodeElement.childNodes().get(0)).text());
-
-                            htmlElement.setType(HTMLElement.ElementType.heade);
-
-                        }
-
-                    } else if (node1 instanceof TextNode) {
-
-                        htmlElement.getTextBuffer().append(((Element) node).text());
-
-                        htmlElement.setType(HTMLElement.ElementType.text);
-
-                    }
-
-                }
-
-                htmlElements.add(htmlElement);
-
-            }
-
-        }
-
-
-        Log.i("HTMLElements:","1321321");
-
-    }
-
 
 
 }

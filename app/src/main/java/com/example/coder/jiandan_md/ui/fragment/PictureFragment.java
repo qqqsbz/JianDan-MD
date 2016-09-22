@@ -3,7 +3,7 @@ package com.example.coder.jiandan_md.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
-import com.example.coder.jiandan_md.PictureItemAdapter;
 import com.example.coder.jiandan_md.R;
 import com.example.coder.jiandan_md.util.CallBackService;
 import com.example.coder.jiandan_md.util.ConstantString;
@@ -44,7 +43,7 @@ public class PictureFragment extends Fragment implements CallBackService , Const
      */
     private PictureItemAdapter pictureItemAdapter;
 
-    protected PictureType pictureType;
+    protected PictureFragment.PictureType pictureType;
 
     public enum PictureType {
         PictureTypeBoring,PictureTypeGirl;

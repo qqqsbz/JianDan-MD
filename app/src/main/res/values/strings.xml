@@ -14,15 +14,18 @@
 
     <!--基本设置-->
     <string name="setting_basic_title">基本设置</string>
-    <string name="setting_basic_cache_title">清楚缓存</string>
+    <string name="setting_basic_cache_title">清除缓存</string>
     <string name="setting_basic_cache_summry">缓存大小:</string>
     <string name="setting_basic_refresh_title">新鲜事大图模式</string>
 
     <!--其他设置-->
     <string name="setting_other_title">其他设置</string>
     <string name="setting_other_about">关于开发者</string>
-    <string name="setting_other_version">1.2</string>
+    <string name="setting_other_version">版本号:1.0</string>
     <string name="title_activity_refresh_detail">RefreshDetailActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

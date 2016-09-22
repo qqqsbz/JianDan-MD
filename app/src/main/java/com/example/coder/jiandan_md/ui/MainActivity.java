@@ -15,7 +15,10 @@ import android.widget.Toast;
 import com.example.coder.jiandan_md.R;
 import com.example.coder.jiandan_md.ui.fragment.BoringFragment;
 import com.example.coder.jiandan_md.ui.fragment.GirlFragment;
+import com.example.coder.jiandan_md.ui.fragment.MovieFragment;
 import com.example.coder.jiandan_md.ui.fragment.RefreshFragment;
+import com.example.coder.jiandan_md.ui.fragment.SettingFragment;
+import com.example.coder.jiandan_md.ui.fragment.StainFragment;
 import com.example.coder.jiandan_md.util.ImageLoadProxy;
 
 import butterknife.BindView;
@@ -68,23 +71,37 @@ public class MainActivity extends AppCompatActivity {
 
                         case R.id.navigation_menu_fresh:
 
-                            .this.replaceToRefreshFragment();
+                            MainActivity.this.replaceToRefreshFragment();
 
                             break;
 
                         case R.id.navigation_menu_boring:
 
-                            .this.replaceToBoringFragment();
+                            MainActivity.this.replaceToBoringFragment();
 
                             break;
 
                         case R.id.navigation_menu_girl:
 
-                            .this.replaceToGirlFragment();
+                            MainActivity.this.replaceToGirlFragment();
+
+                            break;
+
+                        case R.id.navigation_menu_stain:
+
+                            MainActivity.this.replaceToStainFragment();
+
+                            break;
+
+                        case R.id.navigation_menu_movie:
+
+                            MainActivity.this.replaceToMovieFragment();
 
                             break;
 
                         case R.id.navigation_menu_setting:
+
+                            MainActivity.this.replaceToSettingFragment();
 
                             break;
 
@@ -104,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        .this.replaceToRefreshFragment();
+        MainActivity.this.replaceToRefreshFragment();
 
     }
 
@@ -114,13 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
         drawerToggle.syncState();
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.refresh_menu,menu);
-//        return true;
-//    }
 
 
     @Override
@@ -149,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void replaceToRefreshFragment() {
 
-        getSupportFragmentManager()
+        getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frameLayout, new RefreshFragment())
                 .commit();
@@ -157,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void replaceToBoringFragment() {
 
-        getSupportFragmentManager()
+        getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frameLayout,new BoringFragment())
                 .commit();
@@ -166,10 +176,37 @@ public class MainActivity extends AppCompatActivity {
 
     private void replaceToGirlFragment() {
 
-        getSupportFragmentManager()
+        getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frameLayout,new GirlFragment())
                 .commit();
+
+    }
+
+    private void replaceToStainFragment() {
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frameLayout,new StainFragment())
+                .commit();
+
+    }
+
+    private void replaceToMovieFragment() {
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frameLayout,new MovieFragment())
+                .commit();
+    }
+
+    private void replaceToSettingFragment() {
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frameLayout,new SettingFragment())
+                .commit();
+
 
     }
 

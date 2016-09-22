@@ -7,7 +7,7 @@ public class HTMLElement {
 
     public enum ElementType {
 
-        image,text,link,heade;
+        Image,Text,Heade,ShareToSina,ShareToWeChat;
     }
 
     private StringBuffer textBuffer = new StringBuffer();
