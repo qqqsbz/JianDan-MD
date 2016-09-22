@@ -1,4 +1,4 @@
-package com.example.coder.jiandan_md;
+package com.example.coder.jiandan_md.ui;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,9 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.coder.jiandan_md.R;
+import com.example.coder.jiandan_md.ui.fragment.BoringFragment;
+import com.example.coder.jiandan_md.ui.fragment.GirlFragment;
+import com.example.coder.jiandan_md.ui.fragment.RefreshFragment;
+import com.example.coder.jiandan_md.util.ImageLoadProxy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,12 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
+    private int lastSelectedMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        ImageLoadProxy.initImageLoader(this);
 
         initView();
 
@@ -54,23 +63,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()) {
+                if (item.getItemId() != lastSelectedMenu) {
+                    switch (item.getItemId()) {
 
-                    case R.id.navigation_menu_fresh:
+                        case R.id.navigation_menu_fresh:
 
-                        MainActivity.this.replaceToRefreshFragment();
+                            .this.replaceToRefreshFragment();
 
-                        break;
+                            break;
 
-                    case R.id.navigation_menu_setting:
+                        case R.id.navigation_menu_boring:
 
-                        break;
+                            .this.replaceToBoringFragment();
 
+                            break;
+
+                        case R.id.navigation_menu_girl:
+
+                            .this.replaceToGirlFragment();
+
+                            break;
+
+                        case R.id.navigation_menu_setting:
+
+                            break;
+
+                    }
                 }
 
                 item.setChecked(true);
 
                 drawerLayout.closeDrawer(Gravity.LEFT);
+
+                lastSelectedMenu = item.getItemId();
 
                 return true;
             }
@@ -79,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        MainActivity.this.replaceToRefreshFragment();
+        .this.replaceToRefreshFragment();
 
     }
 
@@ -128,6 +153,24 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.main_frameLayout, new RefreshFragment())
                 .commit();
+    }
+
+    private void replaceToBoringFragment() {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frameLayout,new BoringFragment())
+                .commit();
+
+    }
+
+    private void replaceToGirlFragment() {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frameLayout,new GirlFragment())
+                .commit();
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.coder.jiandan_md;
+package com.example.coder.jiandan_md.ui.fragment;
 
 
 import android.content.Intent;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
+import com.example.coder.jiandan_md.R;
 import com.example.coder.jiandan_md.listener.RecyclerItemClickListener;
 import com.example.coder.jiandan_md.refresh.RefreshDetailActivity;
 import com.example.coder.jiandan_md.refresh.RefreshItemAdapter;
@@ -76,7 +77,7 @@ public class RefreshFragment extends Fragment implements CallBackService,Constan
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        refreshItemAdapter = new RefreshItemAdapter(getActivity(),this,false);
+        refreshItemAdapter = new RefreshItemAdapter(getActivity(),this,true);
 
         recyclerView.setAdapter(refreshItemAdapter);
 
